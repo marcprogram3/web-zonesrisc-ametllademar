@@ -100,6 +100,43 @@ footer p{margin:10px 0;font-size:1.1rem;}
 .ol-popup{background:white;padding:16px 20px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);border:1px solid #e2e8f0;min-width:260px;}
 .ol-popup:after{content:"";position:absolute;bottom:-8px;left:50%;margin-left:-8px;border:8px solid transparent;border-top-color:white;}
 
+/* BANNER DE PRIVACITAT */
+.privacy-banner{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  background:#0c4a6e;
+  color:white;
+  padding:20px;
+  box-shadow:0 -4px 20px rgba(0,0,0,0.2);
+  z-index:9999;
+  font-size:1rem;
+  text-align:center;
+  animation:slideUp 0.6s ease-out;
+}
+.privacy-content{
+  max-width:900px;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+.privacy-content a{color:#a5f3fc;text-decoration:underline;}
+.privacy-btn{
+  background:white;
+  color:#0c4a6e;
+  border:none;
+  padding:10px 30px;
+  border-radius:30px;
+  font-weight:600;
+  cursor:pointer;
+  transition:0.3s;
+}
+.privacy-btn:hover{background:#e0f2fe;transform:scale(1.05);}
+@keyframes slideUp{from{bottom:-100px;opacity:0}to{bottom:0;opacity:1}}
+
 /* RESPONSIVE */
 @media (max-width:768px){
   header{padding:40px 20px;}
@@ -111,4 +148,7 @@ footer p{margin:10px 0;font-size:1.1rem;}
   .comments-table{padding:30px 20px;}
   .comments-table td{font-size:0.95rem;}
   footer{padding:50px 20px;}
+  .privacy-banner{padding:15px;}
+  .privacy-content{font-size:0.95rem;}
+  .privacy-btn{padding:10px 25px;}
 }
