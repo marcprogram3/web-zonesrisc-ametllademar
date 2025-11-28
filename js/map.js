@@ -62,21 +62,23 @@ map.on('click', evt => {
   }
 });
 
-/* === LLEGENDA EN MODAL === */
-const legendBtn = document.getElementById('legendBtn');
-const legendModal = document.getElementById('legendModal');
-const legendClose = document.querySelector('.legend-close');
-const legendList = document.getElementById('legendList');
+/* === LLEGENDA EN MODAL – ara funciona al 100 % === */
+document.addEventListener('DOMContentLoaded', () => {
+  const legendBtn = document.getElementById('legendBtn');
+  const legendModal = document.getElementById('legendModal');
+  const legendClose = document.querySelector('.legend-close');
+  const legendList = document.getElementById('legendList');
 
-legendList.innerHTML = window.zonesRisc
-  .sort((a,b) => b.nivell - a.nivell || b.mentions - a.mentions)
-  .map(z => `
-    <div style="display:flex;align-items:center;margin:8px 0;">
-      <div style="width:18px;height:18px;background:${getColor(z.nivell)};border-radius:4px;margin-right:10px;border:2px solid #fff;"></div>
-      <div><strong>${z.name}</strong> – ${z.mentions} mencions (nivell ${z.nivell})</div>
-    </div>
-  `).join('');
+  legendList.innerHTML = window.zonesRisc
+    .sort((a,b) => b.nivell - a.nivell || b.mentions - a.mentions)
+    .map(z => `
+      <div style="display:flex;align-items:center;margin:8px 0;">
+        <div style="width:18px;height:18px;background:${getColor(z.nivell)};border-radius:4px;margin-right:10px;border:2px solid #fff;"></div>
+        <div><strong>${z.name}</strong> – ${z.mentions} mencions (nivell ${z.nivell})</div>
+      </div>
+    `).join('');
 
-legendBtn.onclick = () => legendModal.style.display = 'block';
-legendClose.onclick = () => legendModal.style.display = 'none';
-window.onclick = (e) => { if (e.target === legendModal) legendModal.style.display = 'none'; };
+  legendBtn.onclick = () => legendModal.style.display = 'block';
+  legendClose.onclick = () => legendModal.style.display = 'none';
+  window.onclick = (e) => { if (e.target === legendModal) legendModal.style.display = 'none'; };
+});
