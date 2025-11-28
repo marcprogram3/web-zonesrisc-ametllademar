@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resultats de l'enquesta sobre les zones de risc a l'Ametlla de Mar</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@9.2.4/ol.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header>
+  <h1>Resultats de l'enquesta sobre les zones de risc a l'Ametlla de Mar</h1>
+  <p class="subtitle">L’Ametlla de Mar · Novembre 2025<br>
+  Marc Borràs Romeu – Grau de Criminologia – Universitat Oberta de Catalunya</p>
+</header>
+
+<section class="intro-section">
+  <div class="container">
+    <h2>Instruccions</h2>
+    <p>Primer de tot, agrair a tots els participants de l’enquesta, ja que sense la vostra col·laboració no s’hagués pogut dur a terme el següent estudi.</p>
+    <p>Aquesta interfície web presenta els resultats d’una enquesta realitzada als veïns i veïnes de l’Ametlla de Mar sobre la seva percepció d’inseguretat al municipi.</p>
+    <p>Les àrees marcades al mapa delimiten les zones que els enquestats van identificar com a més problemàtiques. El color (de groc a vermell fosc) indica el grau de risc percebut, combinant el nombre de mencions i la valoració subjectiva dels participants.</p>
+    <p><strong>Important:</strong> aquest treball reflecteix exclusivament la percepció subjectiva de risc (fear of crime) i no es basa en dades objectives de criminalitat registrada ni en estadístiques policials oficials.</p>
+  </div>
+</section>
+
+<div class="map-wrapper">
+  <div id="map"></div>
+</div>
+
+<div class="container">
+  <h2>Gràfic de les mencions per zona</h2>
+  <canvas id="topChart"></canvas>
+
+  <h2 class="comments-title">Alguns comentaris</h2>
+  <div class="comments-table">
+    <table>
+      <tr><td>• Salfuro és molt fosc</td></tr>
+      <tr><td>• El carrer Constitució no té ni un fanal</td></tr>
+      <tr><td>• A Tres Cales no es veu res a la nit</td></tr>
+      <tr><td>• Miguel de Cervantes està a les fosques</td></tr>
+      <tr><td>• Part de Cala, zero llum</td></tr>
+      <tr><td>• Calafat sembla un poble fantasma de nit</td></tr>
+      <tr><td>• Roques Daurades no té ni un fanal</td></tr>
+      <tr><td>• Pixavaques està completament a les fosques</td></tr>
+      <tr><td>• El túnel de l’estació és negre com un pou</td></tr>
+      <tr><td>• Carrers del centre molt mal il·luminats</td></tr>
+      <tr><td>• A Salfuro sempre hi ha grups bevent i cridant</td></tr>
+      <tr><td>• Plaça del Canó, botellón cada cap de setmana</td></tr>
+      <tr><td>• Parc del Riu ple de porros i llaunes</td></tr>
+      <tr><td>• Passeig Marítim a l’estiu és un descontrol</td></tr>
+      <tr><td>• Salfuro sembla un bar a l’aire lliure</td></tr>
+      <tr><td>• Grups de joves amb música alta al port</td></tr>
+      <tr><td>• A l’estació em van robar la motxilla</td></tr>
+      <tr><td>• A la Part de Cala entren als cotxes</td></tr>
+      <tr><td>• Al port roben motos i bicicletes</td></tr>
+      <tr><td>• Al centre comercial forcen cotxes</td></tr>
+      <tr><td>• No passo per Salfuro ni boja</td></tr>
+      <tr><td>• A la nit evito l’estació</td></tr>
+      <tr><td>• Tres Cales em fa por quan es fa fosc</td></tr>
+      <tr><td>• No surto sola després de les 22</td></tr>
+      <tr><td>• A Salfuro hi ha molts magrebins i donen mala espina</td></tr>
+      <tr><td>• Plaça del Canó està plena de marroquins</td></tr>
+      <tr><td>• Al Parc del Riu només hi ha estrangers</td></tr>
+      <tr><td>• Al Passeig Marítim aparquen a les voreres</td></tr>
+      <tr><td>• Carrer Constitució és un circuit de cotxes</td></tr>
+      <tr><td>• Part de Cala, cotxes a doble fila</td></tr>
+      <tr><td>• No es veu mai la policia a Tres Cales</td></tr>
+      <tr><td>• Calafat és terra de ningú</td></tr>
+      <tr><td>• A Pixavaques no passa mai ningú</td></tr>
+      <tr><td>• Grafitis a tot arreu del centre</td></tr>
+      <tr><td>• El port està brutíssim</td></tr>
+      <tr><td>• Soroll de motos tota la nit</td></tr>
+      <tr><td>• Carrer Cervantes i perpendiculars. Immigració amb perfil delinqüencial.</td></tr>
+    </table>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p><strong>Resultats de l'enquesta sobre les zones de risc a l'Ametlla de Mar</strong><br>
+    Marc Borràs Romeu – Estudiant del Grau de Criminologia de la Universitat Oberta de Catalunya</p>
+    <p class="contact">marc.program3@gmail.com</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/ol@9.2.4/dist/ol.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+<script>
+  Chart.register(ChartDataLabels);
+</script>
+
+<script src="js/zones-data.js"></script>
+<script src="js/map.js"></script>
+<script src="js/chart.js"></script>
+</body>
+</html>
