@@ -22,7 +22,6 @@ window.zonesRisc.forEach(zona => {
   vectorSource.addFeature(feature);
 });
 
-// Colors groc → vermell fosc
 function getColor(nivell) {
   const palette = ['#fef3c7', '#fde68a', '#fbbf24', '#f97316', '#dc2626'];
   return palette[nivell - 1] || '#dc2626';
@@ -32,14 +31,12 @@ vectorLayer.setStyle(feature => {
   const nivell = feature.get('zona').nivell;
   const baseColor = getColor(nivell);
   const opacity = nivell === 5 ? 0.55 : nivell === 4 ? 0.50 : nivell === 3 ? 0.45 : nivell === 2 ? 0.40 : 0.35;
-
   return new ol.style.Style({
     fill: new ol.style.Fill({ color: baseColor + Math.floor(opacity * 255).toString(16).padStart(2, '0') }),
-    stroke: new ol.style.Stroke({ color: baseColor, width: 2 }) // línies més fines
+    stroke: new ol.style.Stroke({ color: baseColor, width: 2 })
   });
 });
 
-// Popup
 const popup = new ol.Overlay({
   element: document.createElement('div'),
   positioning: 'bottom-center',
@@ -65,23 +62,21 @@ map.on('click', evt => {
   }
 });
 
-// Llegenda amb barra de color
-const legend = document.createElement('div');
-legend.className = 'legend';
-legend.innerHTML = `
-  <h4>Intensitat del risc percebut</h4>
-  <div style="display:flex;align-items:center;margin:15px 0;">
-    <div style="width:240px;height:32px;background:linear-gradient(to right,#fef3c7,#fde68a,#fbbf24,#f97316,#dc2626);
-      border-radius:16px;border:3px solid #fff;box-shadow:0 6px 20px rgba(0,0,0,0.3);"></div>
-    <span style="margin-left:16px;font-weight:700;color:#1f2937;">Baix → Alt</span>
-  </div>
-  ${window.zonesRisc
-    .sort((a,b) => b.nivell - a.nivell || b.mentions - a.mentions)
-    .map(z => `
-      <div class="legend-item">
-        <div class="legend-color" style="background:${getColor(z.nivell)}"></div>
-        <div><strong>${z.name}</strong> – ${z.mentions} mencions (nivell ${z.nivell})</div>
-      </div>
-    `).join('')}
-`;
-document.querySelector('.map-wrapper').appendChild(legend);
+/* === LLEGENDA EN MODAL === */
+const legendBtn = document.getElementById('legendBtn');
+const legendModal = document.getElementById('legendModal');
+const legendClose = document.querySelector('.legend-close');
+const legendList = document.getElementById('legendList');
+
+legendList.innerHTML = window.zonesRisc
+  .sort((a,b) => b.nivell - a.nivell || b.mentions - a.mentions)
+  .map(z => `
+    <div style="display:flex;align-items:center;margin:8px 0;">
+      <div style="width:18px;height:18px;background:${getColor(z.nivell)};border-radius:4px;margin-right:10px;border:2px solid #fff;"></div>
+      <div><strong>${z.name}</strong> – ${z.mentions} mencions (nivell ${z.nivell})</div>
+    </div>
+  `).join('');
+
+legendBtn.onclick = () => legendModal.style.display = 'block';
+legendClose.onclick = () => legendModal.style.display = 'none';
+window.onclick = (e) => { if (e.target === legendModal) legendModal.style.display = 'none'; };

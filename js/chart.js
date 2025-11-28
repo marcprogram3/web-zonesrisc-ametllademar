@@ -18,21 +18,10 @@ new Chart(document.getElementById('topChart'), {
     maintainAspectRatio: true,
     cutout: '65%',
     plugins: {
-      legend: {
-        position: 'bottom',
-        labels: {
-          padding: 20,
-          font: { size: 13 },
-          usePointStyle: true,
-          pointStyle: 'circle'
-        }
-      },
+      legend: { position: 'bottom', labels: { padding: 20, font: { size: 13 } } },
       datalabels: {
         color: '#ffffff',
-        font: {
-          weight: 'bold',
-          size: 16
-        },
+        font: { weight: 'bold', size: 16 },
         formatter: (value) => value > 0 ? value : '',
         anchor: 'center',
         align: 'center'

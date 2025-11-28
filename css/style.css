@@ -12,20 +12,10 @@ h1{font-size:2.8rem;margin:0;font-weight:700;}
 .map-wrapper{position:relative;margin:40px auto;max-width:1600px;padding:0 20px;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.12);}
 #map{height:75vh;width:100%;border-radius:12px;}
 
-/* LLEGENDA – perfecte en PC i mòbil */
-.legend{
-  position:absolute;top:10px;left:10px;background:rgba(255,255,255,0.97);border:1px solid #e2e8f0;
-  padding:12px 14px;border-radius:10px;box-shadow:0 4px 15px rgba(0,0,0,0.12);font-size:13px;
-  max-width:280px;z-index:100;pointer-events:none;
-}
-.legend h4{margin:0 0 12px;color:#7f1d1d;font-size:14px;font-weight:700;}
-.legend-item{margin:7px 0;display:flex;align-items:center;}
-.legend-color{width:18px;height:18px;border-radius:4px;margin-right:10px;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,0.2);}
-
 .container{max-width:1400px;margin:80px auto;padding:0 20px;text-align:center;}
 h2{font-size:2rem;color:#0c4a6e;margin-bottom:50px;}
 
-/* GRÀFIC – mida perfecta */
+/* GRÀFIC CIRCULAR – mida perfecta */
 #topChart{
   max-width:560px !important;
   width:100%;
@@ -52,24 +42,73 @@ h2{font-size:2rem;color:#0c4a6e;margin-bottom:50px;}
 .comments-table td{padding:12px 0;border-bottom:1px solid #e5e7eb;text-align:left;}
 .comments-table tr:last-child td{border-bottom:none;}
 
+/* BOTÓ INFO FLOTANT */
+.legend-btn{
+  position:absolute;
+  bottom:20px;
+  right:20px;
+  width:50px;
+  height:50px;
+  background:#0c4a6e;
+  color:white;
+  border:none;
+  border-radius:50%;
+  font-size:24px;
+  font-weight:bold;
+  cursor:pointer;
+  box-shadow:0 4px 15px rgba(0,0,0,0.3);
+  z-index:100;
+}
+.legend-btn:hover{background:#1e40af;}
+
+/* MODAL DE LLEGENDA */
+.legend-modal{
+  display:none;
+  position:fixed;
+  z-index:1000;
+  left:0;top:0;width:100%;height:100%;
+  background:rgba(0,0,0,0.6);
+  overflow:auto;
+}
+.legend-modal-content{
+  background:white;
+  margin:10% auto;
+  padding:30px;
+  border-radius:12px;
+  max-width:90%;
+  width:420px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.3);
+  position:relative;
+}
+.legend-close{
+  position:absolute;
+  top:10px;
+  right:15px;
+  font-size:28px;
+  font-weight:bold;
+  cursor:pointer;
+  color:#aaa;
+}
+.legend-close:hover{color:#000;}
+
+/* POPUP DEL MAPA */
+.ol-popup{background:white;padding:16px 20px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);border:1px solid #e2e8f0;min-width:260px;}
+.ol-popup:after{content:"";position:absolute;bottom:-8px;left:50%;margin-left:-8px;border:8px solid transparent;border-top-color:white;}
+
+/* FOOTER */
 footer{background:#0c4a6e;color:white;padding:60px 20px;text-align:center;}
 footer p{margin:10px 0;font-size:1.1rem;}
 .contact{font-size:1.3rem;font-weight:500;margin-top:20px;opacity:0.95;}
-
-/* POPUP */
-.ol-popup{background:white;padding:16px 20px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);border:1px solid #e2e8f0;min-width:260px;}
-.ol-popup:after{content:"";position:absolute;bottom:-8px;left:50%;margin-left:-8px;border:8px solid transparent;border-top-color:white;}
 
 /* RESPONSIVE MÒBIL */
 @media (max-width: 768px){
   header{padding:40px 20px;}
   h1{font-size:2.2rem;}
   .intro-section{padding:40px 20px;}
-  .legend{top:8px;left:8px;right:8px;max-width:none;font-size:11.5px;padding:10px 12px;}
-  .legend h4{font-size:12.5px;}
   #map{height:60vh;}
   #topChart{max-width:100% !important;padding:25px;}
   .comments-table{padding:30px 20px;}
   .comments-table td{font-size:0.95rem;}
   footer{padding:50px 20px;}
+  .legend-modal-content{width:95%;margin:20% auto;}
 }
