@@ -15,13 +15,15 @@ const vectorSource = new ol.source.Vector();
 const vectorLayer = new ol.layer.Vector({ source: vectorSource });
 map.addLayer(vectorLayer);
 
-// === CARREGA ZONES QUAN ESTIGUIN DISPONIBLES ===
-function loadZones() {
-  if (!window.zonesRisc || window.zonesRisc.length === 0) {
-    setTimeout(loadZones, 100); // espera fins que zones-data.js es carregui
-    return;
-  }
+let zonesLoaded = false;
 
+// === FUNCIÓ PER CARREGAR TOTES LES ZONES QUAN ESTIGUIN DISPONIBLES ===
+function loadAll() {
+  if (!window.zonesRisc || zonesLoaded) return;
+
+  zonesLoaded = true;
+
+  // Carrega polígons
   window.zonesRisc.forEach(zona => {
     const coords = zona.polygon.map(p => ol.proj.fromLonLat([p[0], p[1]]));
     const feature = new ol.Feature(new ol.geom.Polygon([coords]));
@@ -29,7 +31,7 @@ function loadZones() {
     vectorSource.addFeature(feature);
   });
 
-  // === ESTILS ===
+  // Estils
   function getColor(nivell) {
     const palette = ['#fef3c7', '#fde68a', '#fbbf24', '#f97316', '#dc2626'];
     return palette[nivell - 1] || '#dc2626';
@@ -45,7 +47,7 @@ function loadZones() {
     });
   });
 
-  // === POPUP ===
+  // Popup
   const popup = new ol.Overlay({
     element: document.createElement('div'),
     positioning: 'bottom-center',
@@ -71,27 +73,39 @@ function loadZones() {
     }
   });
 
-  // === LLEGENDA EN MODAL ===
+  // === LLEGENDA MODAL ===
   const legendBtn = document.getElementById('legendBtn');
   const legendModal = document.getElementById('legendModal');
   const legendClose = document.querySelector('.legend-close');
   const legendList = document.getElementById('legendList');
 
-  legendList.innerHTML = window.zonesRisc
-    .sort((a,b) => b.nivell - a.nivell || b.mentions - a.mentions)
-    .map(z => `
-      <div style="display:flex;align-items:center;margin:8px 0;">
-        <div style="width:18px;height:18px;background:${getColor(z.nivell)};border-radius:4px;margin-right:10px;border:2px solid #fff;"></div>
-        <div><strong>${z.name}</strong> – ${z.mentions} mencions (nivell ${z.nivell})</div>
-      </div>
-    `).join('');
+  if (legendList) {
+    legendList.innerHTML = window.zonesRisc
+      .sort((a,b) => b.nivell - a.nivell || b.mentions - a.mentions)
+      .map(z => `
+        <div style="display:flex;align-items:center;margin:8px 0;">
+          <div style="width:18px;height:18px;background:${getColor(z.nivell)};border-radius:4px;margin-right:10px;border:2px solid #fff;"></div>
+          <div><strong>${z.name}</strong> – ${z.mentions} mencions (nivell ${z.nivell})</div>
+        </div>
+      `).join('');
+  }
 
   legendBtn.onclick = () => legendModal.style.display = 'block';
   legendClose.onclick = () => legendModal.style.display = 'none';
-  window.onclick = (e) => { if (e.target === legendModal) legendModal.style.display = 'none'; };
+  window.onclick = e => { if (e.target === legendModal) legendModal.style.display = 'none'; };
 }
 
 // Executa quan tot està carregat
 document.addEventListener('DOMContentLoaded', () => {
-  loadZones();
+  if (window.zonesRisc) {
+    loadAll();
+  } else {
+    // Espera a que zones-data.js es carregui
+    const interval = setInterval(() => {
+      if (window.zonesRisc) {
+        clearInterval(interval);
+        loadAll();
+      }
+    }, 50);
+  }
 });
