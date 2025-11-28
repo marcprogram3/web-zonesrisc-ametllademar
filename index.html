@@ -25,12 +25,34 @@
   </div>
 </section>
 
+<!-- LLEGENDA FIXA ENTRE INTRO I MAPA -->
+<section class="legend-section">
+  ">
+  <div class="container">
+    <h2>Intensitat del risc percebut</h2>
+    <div class="gradient-bar">
+      <div class="gradient"></div>
+      <div class="gradient-labels">
+        <span>Baix</span>
+        <span>Alt</span>
+      </div>
+    </div>
+    <div class="legend-list">
+      <div class="legend-item"><span class="legend-color" style="background:#fef3c7;"></span> Nivell 1 – Molt baix</div>
+      <div class="legend-item"><span class="legend-color" style="background:#fde68a;"></span> Nivell 2 – Baix</div>
+      <div class="legend-item"><span class="legend-color" style="background:#fbbf24;"></span> Nivell 3 – Mitjà</div>
+      <div class="legend-item"><span class="legend-color" style="background:#f97316;"></span> Nivell 4 – Alt</div>
+      <div class="legend-item"><span class="legend-color" style="background:#dc2626;"></span> Nivell 5 – Molt alt</div>
+    </div>
+  </div>
+</section>
+
 <div class="map-wrapper">
   <div id="map"></div>
 </div>
 
 <div class="container">
-  <h2>Gràfic de les mencions per zona</h2>
+  <h2>Distribució de les mencions per zona</h2>
   <canvas id="topChart"></canvas>
 
   <h2 class="comments-title">Alguns comentaris</h2>
@@ -88,9 +110,7 @@
 <script src="https://cdn.jsdelivr.net/npm/ol@9.2.4/dist/ol.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
-<script>
-  Chart.register(ChartDataLabels);
-</script>
+<script>Chart.register(ChartDataLabels);</script>
 
 <script src="js/zones-data.js"></script>
 <script src="js/map.js"></script>

@@ -9,13 +9,65 @@ h1{font-size:2.8rem;margin:0;font-weight:700;}
 .intro-section h2{text-align:center;font-size:2.2rem;color:#0c4a6e;margin-bottom:30px;}
 .intro-section p{max-width:900px;margin:20px auto;font-size:1.1rem;color:#374151;text-align:justify;}
 
-.map-wrapper{position:relative;margin:40px auto;max-width:1600px;padding:0 20px;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.12);}
+/* LLEGENDA FIXA ENTRE SECCIONS */
+.legend-section{
+  background:white;
+  padding:60px 20px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.08);
+}
+.legend-section h2{
+  text-align:center;
+  font-size:2rem;
+  color:#0c4a6e;
+  margin-bottom:40px;
+}
+.gradient-bar{
+  background:#f1f5f9;
+  border-radius:12px;
+  padding:20px;
+  text-align:center;
+  box-shadow:inset 0 2px 8px rgba(0,0,0,0.1);
+}
+.gradient{
+  height:40px;
+  border-radius:12px;
+  background:linear-gradient(to right,#fef3c7,#fde68a,#fbbf24,#f97316,#dc2626);
+  border:3px solid #fff;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);
+}
+.gradient-labels{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+  font-weight:600;
+  color:#1f2937;
+}
+.legend-list{
+  margin-top:40px;
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:15px;
+}
+.legend-item{
+  display:flex;
+  align-items:center;
+  font-size:1.1rem;
+}
+.legend-color{
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  margin-right:15px;
+  border:2px solid #fff;
+  box-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+
+.map-wrapper{margin:40px auto;max-width:1600px;padding:0 20px;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.12);}
 #map{height:75vh;width:100%;border-radius:12px;}
 
 .container{max-width:1400px;margin:80px auto;padding:0 20px;text-align:center;}
 h2{font-size:2rem;color:#0c4a6e;margin-bottom:50px;}
 
-/* GRÀFIC CIRCULAR – mida perfecta */
 #topChart{
   max-width:560px !important;
   width:100%;
@@ -26,7 +78,6 @@ h2{font-size:2rem;color:#0c4a6e;margin-bottom:50px;}
   box-shadow:0 6px 20px rgba(0,0,0,0.08);
 }
 
-/* TAULA DE COMENTARIS */
 .comments-title{margin-top:100px !important;}
 .comments-table{
   margin-top:40px;
@@ -42,73 +93,22 @@ h2{font-size:2rem;color:#0c4a6e;margin-bottom:50px;}
 .comments-table td{padding:12px 0;border-bottom:1px solid #e5e7eb;text-align:left;}
 .comments-table tr:last-child td{border-bottom:none;}
 
-/* BOTÓ INFO FLOTANT */
-.legend-btn{
-  position:absolute;
-  bottom:20px;
-  right:20px;
-  width:50px;
-  height:50px;
-  background:#0c4a6e;
-  color:white;
-  border:none;
-  border-radius:50%;
-  font-size:24px;
-  font-weight:bold;
-  cursor:pointer;
-  box-shadow:0 4px 15px rgba(0,0,0,0.3);
-  z-index:100;
-}
-.legend-btn:hover{background:#1e40af;}
-
-/* MODAL DE LLEGENDA */
-.legend-modal{
-  display:none;
-  position:fixed;
-  z-index:1000;
-  left:0;top:0;width:100%;height:100%;
-  background:rgba(0,0,0,0.6);
-  overflow:auto;
-}
-.legend-modal-content{
-  background:white;
-  margin:10% auto;
-  padding:30px;
-  border-radius:12px;
-  max-width:90%;
-  width:420px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.3);
-  position:relative;
-}
-.legend-close{
-  position:absolute;
-  top:10px;
-  right:15px;
-  font-size:28px;
-  font-weight:bold;
-  cursor:pointer;
-  color:#aaa;
-}
-.legend-close:hover{color:#000;}
-
-/* POPUP DEL MAPA */
-.ol-popup{background:white;padding:16px 20px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);border:1px solid #e2e8f0;min-width:260px;}
-.ol-popup:after{content:"";position:absolute;bottom:-8px;left:50%;margin-left:-8px;border:8px solid transparent;border-top-color:white;}
-
-/* FOOTER */
 footer{background:#0c4a6e;color:white;padding:60px 20px;text-align:center;}
 footer p{margin:10px 0;font-size:1.1rem;}
 .contact{font-size:1.3rem;font-weight:500;margin-top:20px;opacity:0.95;}
 
-/* RESPONSIVE MÒBIL */
-@media (max-width: 768px){
+.ol-popup{background:white;padding:16px 20px;border-radius:8px;box-shadow:0 6px 20px rgba(0,0,0,0.15);border:1px solid #e2e8f0;min-width:260px;}
+.ol-popup:after{content:"";position:absolute;bottom:-8px;left:50%;margin-left:-8px;border:8px solid transparent;border-top-color:white;}
+
+/* RESPONSIVE */
+@media (max-width:768px){
   header{padding:40px 20px;}
   h1{font-size:2.2rem;}
-  .intro-section{padding:40px 20px;}
+  .intro-section,.legend-section{padding:40px 20px;}
+  .legend-list{grid-template-columns:1fr;}
   #map{height:60vh;}
   #topChart{max-width:100% !important;padding:25px;}
   .comments-table{padding:30px 20px;}
   .comments-table td{font-size:0.95rem;}
   footer{padding:50px 20px;}
-  .legend-modal-content{width:95%;margin:20% auto;}
 }

@@ -15,97 +15,49 @@ const vectorSource = new ol.source.Vector();
 const vectorLayer = new ol.layer.Vector({ source: vectorSource });
 map.addLayer(vectorLayer);
 
-let zonesLoaded = false;
+window.zonesRisc.forEach(zona => {
+  const coords = zona.polygon.map(p => ol.proj.fromLonLat([p[0], p[1]]));
+  const feature = new ol.Feature(new ol.geom.Polygon([coords]));
+  feature.set('zona', zona);
+  vectorSource.addFeature(feature);
+});
 
-// === FUNCIÓ PER CARREGAR TOTES LES ZONES QUAN ESTIGUIN DISPONIBLES ===
-function loadAll() {
-  if (!window.zonesRisc || zonesLoaded) return;
-
-  zonesLoaded = true;
-
-  // Carrega polígons
-  window.zonesRisc.forEach(zona => {
-    const coords = zona.polygon.map(p => ol.proj.fromLonLat([p[0], p[1]]));
-    const feature = new ol.Feature(new ol.geom.Polygon([coords]));
-    feature.set('zona', zona);
-    vectorSource.addFeature(feature);
-  });
-
-  // Estils
-  function getColor(nivell) {
-    const palette = ['#fef3c7', '#fde68a', '#fbbf24', '#f97316', '#dc2626'];
-    return palette[nivell - 1] || '#dc2626';
-  }
-
-  vectorLayer.setStyle(feature => {
-    const nivell = feature.get('zona').nivell;
-    const baseColor = getColor(nivell);
-    const opacity = nivell === 5 ? 0.55 : nivell === 4 ? 0.50 : nivell === 3 ? 0.45 : nivell === 2 ? 0.40 : 0.35;
-    return new ol.style.Style({
-      fill: new ol.style.Fill({ color: baseColor + Math.floor(opacity * 255).toString(16).padStart(2, '0') }),
-      stroke: new ol.style.Stroke({ color: baseColor, width: 2 })
-    });
-  });
-
-  // Popup
-  const popup = new ol.Overlay({
-    element: document.createElement('div'),
-    positioning: 'bottom-center',
-    offset: [0, -10]
-  });
-  popup.getElement().className = 'ol-popup';
-  popup.getElement().innerHTML = '<div id="popup-content"></div>';
-  map.addOverlay(popup);
-
-  map.on('click', evt => {
-    const feature = map.forEachFeatureAtPixel(evt.pixel, f => f);
-    if (feature && feature.get('zona')) {
-      const z = feature.get('zona');
-      document.getElementById('popup-content').innerHTML = `
-        <strong style="font-size:1.5em;color:#7f1d1d">${z.name}</strong><br>
-        <b style="font-size:1.7em;color:#dc2626">${z.mentions} mencions</b><br>
-        Nivell de risc: <strong>${z.nivell}/5</strong><br><br>
-        ${z.description}
-      `;
-      popup.setPosition(evt.coordinate);
-    } else {
-      popup.setPosition(undefined);
-    }
-  });
-
-  // === LLEGENDA MODAL ===
-  const legendBtn = document.getElementById('legendBtn');
-  const legendModal = document.getElementById('legendModal');
-  const legendClose = document.querySelector('.legend-close');
-  const legendList = document.getElementById('legendList');
-
-  if (legendList) {
-    legendList.innerHTML = window.zonesRisc
-      .sort((a,b) => b.nivell - a.nivell || b.mentions - a.mentions)
-      .map(z => `
-        <div style="display:flex;align-items:center;margin:8px 0;">
-          <div style="width:18px;height:18px;background:${getColor(z.nivell)};border-radius:4px;margin-right:10px;border:2px solid #fff;"></div>
-          <div><strong>${z.name}</strong> – ${z.mentions} mencions (nivell ${z.nivell})</div>
-        </div>
-      `).join('');
-  }
-
-  legendBtn.onclick = () => legendModal.style.display = 'block';
-  legendClose.onclick = () => legendModal.style.display = 'none';
-  window.onclick = e => { if (e.target === legendModal) legendModal.style.display = 'none'; };
+function getColor(nivell) {
+  const palette = ['#fef3c7', '#fde68a', '#fbbf24', '#f97316', '#dc2626'];
+  return palette[nivell - 1] || '#dc2626';
 }
 
-// Executa quan tot està carregat
-document.addEventListener('DOMContentLoaded', () => {
-  if (window.zonesRisc) {
-    loadAll();
+vectorLayer.setStyle(feature => {
+  const nivell = feature.get('zona').nivell;
+  const baseColor = getColor(nivell);
+  const opacity = nivell === 5 ? 0.55 : nivell === 4 ? 0.50 : nivell === 3 ? 0.45 : nivell === 2 ? 0.40 : 0.35;
+  return new ol.style.Style({
+    fill: new ol.style.Fill({ color: baseColor + Math.floor(opacity * 255).toString(16).padStart(2, '0') }),
+    stroke: new ol.style.Stroke({ color: baseColor, width: 2 })
+  });
+});
+
+const popup = new ol.Overlay({
+  element: document.createElement('div'),
+  positioning: 'bottom-center',
+  offset: [0, -10]
+});
+popup.getElement().className = 'ol-popup';
+popup.getElement().innerHTML = '<div id="popup-content"></div>';
+map.addOverlay(popup);
+
+map.on('click', evt => {
+  const feature = map.forEachFeatureAtPixel(evt.pixel, f => f);
+  if (feature && feature.get('zona')) {
+    const z = feature.get('zona');
+    document.getElementById('popup-content').innerHTML = `
+      <strong style="font-size:1.5em;color:#7f1d1d">${z.name}</strong><br>
+      <b style="font-size:1.7em;color:#dc2626">${z.mentions} mencions</b><br>
+      Nivell de risc: <strong>${z.nivell}/5</strong><br><br>
+      ${z.description}
+    `;
+    popup.setPosition(evt.coordinate);
   } else {
-    // Espera a que zones-data.js es carregui
-    const interval = setInterval(() => {
-      if (window.zonesRisc) {
-        clearInterval(interval);
-        loadAll();
-      }
-    }, 50);
+    popup.setPosition(undefined);
   }
 });
